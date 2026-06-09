@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="bubbleNgo Admin Panel for managing services and orders.">
+  <meta name="author" content="bubbleNgo">
+  <title>bubbleNgo - Admin Panel</title>
+  <link rel="icon" type="image/png" href="https://www.pexels.com/photo/1687147/download/?search_query=car%20wash&tracking_id=abc123">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+    body {
+      color: #1f2937;
+      background: #f8fafc;
+      display: flex;
+      min-height: 100vh;
+    }
+    .sidebar {
+      width: 250px;
+      background: #1a3c6e;
+      color: #fff;
+      padding: 2rem;
+      position: fixed;
+      height: 100%;
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    }
+    .sidebar h2 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+    }
+    .sidebar ul {
+      list-style: none;
+    }
+    .sidebar ul li {
+      margin-bottom: 1.5rem;
+    }
+    .sidebar ul li a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 1.1rem;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+    .sidebar ul li a:hover {
+      color: #facc15;
+    }
+    .main-content {
+      margin-left: 250px;
+      flex: 1;
+      padding: 2rem;
+    }
+    .dashboard {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+    .dashboard h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #1a3c6e;
+      margin-bottom: 2rem;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+    .stat-card {
+      background: #fff;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+    .stat-card h3 {
+      font-size: 1.5rem;
+      color: #1a3c6e;
+      margin-bottom: 0.5rem;
+    }
+    .stat-card p {
+      font-size: 2rem;
+      font-weight: 600;
+      color: #facc15;
+    }
+    .section {
+      margin-bottom: 3rem;
+    }
+    .section h2 {
+      font-size: 2rem;
+      font-weight: 600;
+      color: #1a3c6e;
+      margin-bottom: 1.5rem;
+    }
+    .service-form, .order-table {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    }
+    .service-form input, .service-form button {
+      padding: 0.8rem;
+      margin-bottom: 1rem;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      font-size: 1rem;
+      width: 100%;
+    }
+    .service-form button {
+      background: #facc15;
+      color: #1a3c6e;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .service-form button:hover {
+      background: #eab308;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+    th, td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    th {
+      background: #1a3c6e;
+      color: #fff;
+      font-weight: 600;
+    }
+    td button {
+      padding: 0.5rem 1rem;
+      background: #facc15;
+      color: #1a3c6e;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      margin-right: 0.5rem;
+    }
+    td button:hover {
+      background: #eab308;
+    }
+    td select {
+      padding: 0.5rem;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+    }
+    @media (max-width: 1024px) {
+      .sidebar {
+        width: 200px;
+      }
+      .main-content {
+        margin-left: 200px;
+      }
+    }
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+      }
+      .main-content {
+        margin-left: 0;
+      }
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <h2>bubbleNgo Admin</h2>
+    <ul>
+      <li><a href="#dashboard">Dashboard</a></li>
+      <li><a href="#services">Manage Services</a></li>
+      <li><a href="#orders">Manage Orders</a></li>
+      <li><a href="#">Logout</a></li>
+    </ul>
+  </div>
+
+  <div class="main-content">
+    <div class="dashboard">
+      <h1>Admin Dashboard</h1>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <h3>Total Users</h3>
+          <p>1,234</p>
+        </div>
+        <div class="stat-card">
+          <h3>Total Orders</h3>
+          <p>567</p>
+        </div>
+        <div class="stat-card">
+          <h3>Daily Sales</h3>
+          <p>₹12,345</p>
+        </div>
+        <div class="stat-card">
+          <h3>Active Locations</h3>
+          <p>12</p>
+        </div>
+      </div>
+
+      <div id="services" class="section">
+        <h2>Manage Services</h2>
+        <div class="service-form">
+          <form id="serviceForm">
+            <input type="text" id="serviceName" placeholder="Service Name" required>
+            <input type="number" id="servicePrice" placeholder="Price (₹)" required>
+            <input type="text" id="serviceDuration" placeholder="Duration (e.g., 30 min)" required>
+            <button type="submit">Add Service</button>
+          </form>
+        </div>
+        <table id="serviceTable">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Duration</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Bucket Wash</td>
+              <td>₹99</td>
+              <td>30 min</td>
+              <td>
+                <button onclick="editService(this)">Edit</button>
+                <button onclick="deleteService(this)">Delete</button>
+              </td>
+            </tr>
+            <tr>
+              <td>Deep Cleaning</td>
+              <td>₹499</td>
+              <td>90 min</td>
+              <td>
+                <button onclick="editService(this)">Edit</button>
+                <button onclick="deleteService(this)">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="orders" class="section">
+        <h2>Manage Orders</h2>
+        <div class="order-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Customer</th>
+                <th>Location</th>
+                <th>Service</th>
+                <th>Staff</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>#1234</td>
+                <td>Priya S.</td>
+                <td>Bangalore</td>
+                <td>Bucket Wash</td>
+                <td>
+                  <select>
+                    <option value="">Unassigned</option>
+                    <option value="staff1">Staff 1</option>
+                    <option value="staff2">Staff 2</option>
+                  </select>
+                </td>
+                <td>
+                  <select onchange="updateStatus(this)">
+                    <option value="Accepted">Accepted</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Done">Done</option>
+                  </select>
+                </td>
+                <td>
+                  <button onclick="saveOrder(this)">Save</button>
+                </td>
+              </tr>
+              <tr>
+                <td>#1235</td>
+                <td>Arjun M.</td>
+                <td>Mumbai</td>
+                <td>Deep Cleaning</td>
+                <td>
+                  <select>
+                    <option value="">Unassigned</option>
+                    <option value="staff1">Staff 1</option>
+                    <option value="staff2">Staff 2</option>
+                  </select>
+                </td>
+                <td>
+                  <select onchange="updateStatus(this)">
+                    <option value="Accepted">Accepted</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Done">Done</option>
+                  </select>
+                </td>
+                <td>
+                  <button onclick="saveOrder(this)">Save</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Service Management
+    const serviceForm = document.querySelector('#serviceForm');
+    const serviceTable = document.querySelector('#serviceTable tbody');
+
+    serviceForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.querySelector('#serviceName').value;
+      const price = document.querySelector('#servicePrice').value;
+      const duration = document.querySelector('#serviceDuration').value;
+
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${name}</td>
+        <td>₹${price}</td>
+        <td>${duration}</td>
+        <td>
+          <button onclick="editService(this)">Edit</button>
+          <button onclick="deleteService(this)">Delete</button>
+        </td>
+      `;
+      serviceTable.appendChild(row);
+      serviceForm.reset();
+      alert('Service added successfully!');
+    });
+
+    function editService(button) {
+      const row = button.parentElement.parentElement;
+      const cells = row.cells;
+      document.querySelector('#serviceName').value = cells[0].textContent;
+      document.querySelector('#servicePrice').value = cells[1].textContent.replace('₹', '');
+      document.querySelector('#serviceDuration').value = cells[2].textContent;
+      row.remove();
+      alert('Edit the service details and submit to update.');
+    }
+
+    function deleteService(button) {
+      if (confirm('Are you sure you want to delete this service?')) {
+        button.parentElement.parentElement.remove();
+        alert('Service deleted successfully!');
+      }
+    }
+
+    // Order Management
+    function updateStatus(select) {
+      const status = select.value;
+      console.log(`Status updated to: ${status}`);
+      // Placeholder for API call to update status
+    }
+
+    function saveOrder(button) {
+      const row = button.parentElement.parentElement;
+      const staff = row.querySelector('select').value;
+      const status = row.querySelector('select:nth-child(2)').value;
+      alert(`Order updated: Staff - ${staff || 'Unassigned'}, Status - ${status}`);
+      // Placeholder for API call to save order
+    }
+  </script>
+</body>
+</html>
